@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facial Expression Labeling Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="image-container">
+        {% if image_file %}
+        <p>Progress: {{ progress }}</p>
+        <p>Current Image: {{ image_name }}</p>
+        <img src="{{ url_for('static', filename=image_file) }}" id="image-to-label" alt="Image to Label">
+        {% elif message %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </div>
+    <div class="buttons-container">
+        <button onclick="labelImage('Anger')">Anger</button>
+        <button onclick="labelImage('Disgust')">Disgust</button>
+        <button onclick="labelImage('Fear')">Fear</button>
+        <button onclick="labelImage('Happiness')">Happiness</button>
+        <button onclick="labelImage('Sadness')">Sadness</button>
+        <button onclick="labelImage('Surprise')">Surprise</button>
+        <button onclick="labelImage('Neutral')">Neutral</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
