@@ -5,7 +5,8 @@ from typing import Tuple, Optional
 
 from flask import Flask, render_template, request, jsonify
 
-IMAGE_DIR = Path('images')
+IMAGE_DIR_NAME = 'images'
+IMAGE_DIR = Path(__file__).parent / 'static' / IMAGE_DIR_NAME
 CSV_FILE = Path(__file__).parent / 'labels.csv'
 
 if not CSV_FILE.exists():
@@ -62,7 +63,7 @@ def get_next_image_and_progress() -> Tuple[Optional[str], int, int]:
         for row in reader:
             total_num_images += 1
             if row[1] == '':
-                unlabeled_images.append(f'{IMAGE_DIR}/{row[0]}')
+                unlabeled_images.append(f'{IMAGE_DIR_NAME}/{row[0]}')
 
     if unlabeled_images:
         return random.choice(unlabeled_images), total_num_images, total_num_images - len(unlabeled_images)
