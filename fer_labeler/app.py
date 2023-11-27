@@ -5,8 +5,11 @@ from typing import Tuple, Optional
 
 from flask import Flask, render_template, request, jsonify
 
+INCLUDE_GIFS = True
+GIF_DIR_NAME = 'gifs'
 IMAGE_DIR_NAME = 'images'
-IMAGE_DIR = Path(__file__).parent / 'static' / IMAGE_DIR_NAME
+STATIC_DIR = Path(__file__).parent / 'static'
+IMAGE_DIR = STATIC_DIR / IMAGE_DIR_NAME
 CSV_FILE = Path(__file__).parent / 'labels.csv'
 
 if not CSV_FILE.exists():
@@ -25,18 +28,28 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     image_file, total_num_images, num_labeled_images = get_next_image_and_progress()
+    gif_file = fetch_gif_file(image_file)
+
     if image_file:
-        return render_template('index.html',
-                               image_file=image_file,
-                               message=None,
-                               image_name=image_file.split('/')[1],
-                               progress=f'{num_labeled_images}/{total_num_images}')
+        message = None
+        image_name = image_file.split('/')[1]
     else:
-        return render_template('index.html',
-                               image_file=None,
-                               message=f'{MESSAGE_TEMPLATE} {random.choice(FUNKY_EMOJIS)}',
-                               image_name=None,
-                               progress=f'{total_num_images}/{total_num_images}')
+        message = f'{MESSAGE_TEMPLATE} {random.choice(FUNKY_EMOJIS)}'
+        image_name = None
+
+    return render_template('index.html',
+                           image_file=image_file,
+                           gif_file=gif_file,
+                           message=message,
+                           image_name=image_name,
+                           progress=f'{num_labeled_images}/{total_num_images}')
+
+
+def fetch_gif_file(image_file: str) -> Optional[str]:
+    if INCLUDE_GIFS and image_file is not None:
+        gif_name = image_file.split('/')[1].replace('.png', '.gif')
+        if (STATIC_DIR / GIF_DIR_NAME / gif_name).exists():
+            return f'{GIF_DIR_NAME}/{gif_name}'
 
 
 @app.route('/label', methods=['POST'])

@@ -6,24 +6,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="image-container">
+    <div class="container">
+        <div class="text-container">
+            <p>Progress: {{ progress }}</p>
+            <p>Current Image: {{ image_name }}</p>
+        </div>
         {% if image_file %}
-        <p>Progress: {{ progress }}</p>
-        <p>Current Image: {{ image_name }}</p>
-        <img src="{{ url_for('static', filename=image_file) }}" id="image-to-label" alt="Image to Label">
-        {% elif message %}
-        <p>{{ message }}</p>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename=image_file) }}" id="image-to-label" alt="Image to Label">
+                {% if gif_file %}
+                    <img src="{{ url_for('static', filename=gif_file) }}" alt="GIF Representation">
+                {% endif %}
+            </div>
+        {% else %}
+            <p>{{ message }}</p>
         {% endif %}
+
+        <div class="buttons-container">
+            <button onclick="labelImage('Anger')">Anger</button>
+            <button onclick="labelImage('Disgust')">Disgust</button>
+            <button onclick="labelImage('Fear')">Fear</button>
+            <button onclick="labelImage('Happiness')">Happiness</button>
+            <button onclick="labelImage('Sadness')">Sadness</button>
+            <button onclick="labelImage('Surprise')">Surprise</button>
+            <button onclick="labelImage('Neutral')">Neutral</button>
+        </div>
     </div>
-    <div class="buttons-container">
-        <button onclick="labelImage('Anger')">Anger</button>
-        <button onclick="labelImage('Disgust')">Disgust</button>
-        <button onclick="labelImage('Fear')">Fear</button>
-        <button onclick="labelImage('Happiness')">Happiness</button>
-        <button onclick="labelImage('Sadness')">Sadness</button>
-        <button onclick="labelImage('Surprise')">Surprise</button>
-        <button onclick="labelImage('Neutral')">Neutral</button>
-    </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

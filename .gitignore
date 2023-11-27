@@ -1,4 +1,5 @@
 fer_labeler/static/images/*.png
+fer_labeler/static/gifs/*.gif
 fer_labeler/labels.csv
 
 venv/
