@@ -10,12 +10,20 @@ The order in which images are drawn is random.
 
 ![](gui_preview.png)
 
+Note that there also is a [gifs directory](fer_labeler/static/gifs).
+If a `.gif` file with the same name as the drawn `.png` file is present in the
+[gifs directory](fer_labeler/static/gifs),
+the `.gif` file will be loaded next to the `.png` file.
+
 ## Getting Started
 
 ### Prepare Images
 
 Put the images you want to label in the [images directory](fer_labeler/static/images).
 Currently, the service only looks for `.png` files.
+
+Optionally: Put the corresponding `.gif` files in the
+[gifs directory](fer_labeler/static/gifs).
 
 ### Run Service
 

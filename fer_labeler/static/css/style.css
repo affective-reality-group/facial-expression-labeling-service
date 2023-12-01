@@ -1,16 +1,21 @@
-body {
-    font-family: Arial, sans-serif;
+.container {
     text-align: center;
-    padding: 20px;
+}
+
+.text-container {
+    margin-bottom: 10px;
 }
 
 .image-container {
     margin: 20px auto;
-    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-img {
-    max-width: 100%;
+.image-container img {
+    max-width: 45%;
+    margin: 10px;
     height: auto;
 }
 
